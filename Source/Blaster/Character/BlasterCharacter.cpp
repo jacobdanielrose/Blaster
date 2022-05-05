@@ -31,8 +31,8 @@ ABlasterCharacter::ABlasterCharacter()
 	OverheadWidget->SetupAttachment(RootComponent);
 
 	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
-	Combat->SetIsReplicated(true);
-	// Necessary?
+	//Combat->SetIsReplicated(true);
+	// Apparently better on UE5 this way
 	Combat->SetIsReplicatedByDefault(true);
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;

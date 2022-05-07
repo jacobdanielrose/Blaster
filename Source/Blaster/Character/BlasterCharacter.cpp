@@ -55,18 +55,17 @@ void ABlasterCharacter::Tick(float DeltaTime)
 void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	PlayerInputComponent->BindAxis("MoveForward", this, &ABlasterCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ABlasterCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Turn", this, &ABlasterCharacter::Turn);
+	PlayerInputComponent->BindAxis("LookUp", this, &ABlasterCharacter::LookUp);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Equip", IE_Pressed, this, &ABlasterCharacter::EquipButtonPressed);
 	PlayerInputComponent->BindAction("Crouch", IE_Pressed, this, &ABlasterCharacter::CrouchButtonPressed);
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ABlasterCharacter::AimButtonPressed);
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ABlasterCharacter::AimButtonReleased);
-
-	
-	PlayerInputComponent->BindAxis("MoveForward", this, &ABlasterCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ABlasterCharacter::MoveRight);
-	PlayerInputComponent->BindAxis("Turn", this, &ABlasterCharacter::Turn);
-	PlayerInputComponent->BindAxis("LookUp", this, &ABlasterCharacter::LookUp);
 }
 
 void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

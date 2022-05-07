@@ -12,6 +12,8 @@ UCombatComponent::UCombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
+	//SetIsReplicatedByDefault(true);
+	
 	BaseWalkSpeed = 600.f;
 	AimWalkSpeed = 450.f;
 
@@ -84,5 +86,7 @@ void UCombatComponent::EquipWeapon( AWeapon* WeaponToEquip)
 	EquippedWeapon->SetOwner(Character);
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
 	Character->bUseControllerRotationYaw = true;
+
+	
 }
 

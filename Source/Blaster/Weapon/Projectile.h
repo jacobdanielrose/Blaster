@@ -16,9 +16,14 @@ class BLASTER_API AProjectile : public AActor
 	
 public:	
 	AProjectile();
+	virtual void Destroyed() override;
 
 protected:
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -31,6 +36,13 @@ private:
 	class UParticleSystem* Tracer;
 
 	class UParticleSystemComponent* TracerComponent;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* ImpactParticles;
+
+	// soundbase vs soundcue?
+	UPROPERTY(EditAnywhere)
+	class USoundBase* ImpactSound;
 	
 public:	
 	virtual void Tick(float DeltaTime) override;

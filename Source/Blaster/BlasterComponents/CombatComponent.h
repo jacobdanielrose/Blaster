@@ -39,6 +39,8 @@ protected:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastFire();
+
+	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
 	
 private:
 	class ABlasterCharacter* Character;
@@ -56,5 +58,7 @@ private:
 	float AimWalkSpeed;
 
 	bool bFireButtonPressed;
+
+	FVector HitTarget;
 	
 };

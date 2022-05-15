@@ -169,7 +169,6 @@ void UCombatComponent::FireTimerFinished()
 	bCanFire = true;
 	if (bFireButtonPressed && EquippedWeapon->bAutomatic)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Help Me!") );
 		Fire();
 	}
 }

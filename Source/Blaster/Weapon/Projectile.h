@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
+#define DEFAULT_WEAPON_DAMAGE 20.f
+
 /**
  * 
  */
@@ -34,6 +36,9 @@ protected:
 
 	UFUNCTION()
 	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	UPROPERTY(EditAnywhere)
+	float Damage = DEFAULT_WEAPON_DAMAGE;
 	
 private:
 	UPROPERTY(EditAnywhere)

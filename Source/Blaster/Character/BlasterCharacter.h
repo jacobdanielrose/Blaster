@@ -37,12 +37,6 @@ public:
 	 */
 	void PlayFireMontage(bool bAiming);
 
-	/*
-	 * Replicated Public Methods
-	 */
-	UFUNCTION(NetMulticast, Unreliable)
-	void MulticastHit();
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -72,6 +66,13 @@ protected:
 	void AimOffset(float DeltaTime);
 	void SimProxiesTurn();
 	void PlayHitReactMontage();
+
+	/*
+	 * Player State Methods
+	 */
+	UFUNCTION()
+	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+	void UpdateHUDHealth();
 
 private:
 	/*
@@ -159,6 +160,7 @@ private:
 	UFUNCTION()
 	void OnRep_Health();
 
+	class ABlasterPlayerController* BlasterPlayerController;
 	
 public:
 	/*

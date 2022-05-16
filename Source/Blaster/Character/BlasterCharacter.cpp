@@ -188,8 +188,36 @@ void ABlasterCharacter::PlayFireMontage(bool bAiming)
 	}
 }
 
-void ABlasterCharacter::Elim()
+void ABlasterCharacter::PlayDeathMontage()
 {
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && DeathMontage)
+	{
+		AnimInstance->Montage_Play(DeathMontage);
+		FName SectionName;
+		int32 num = FMath::RandRange(0,2);
+		// really shitty swtich to play random montage section on death
+		// TODO: make this based on where player is hit.
+		switch (num)
+		{
+		case 0:
+			SectionName = FName("DeathTorso");
+			break;
+		case 1:
+			SectionName = FName("DeathShoulder");
+			break;
+		case 2:
+			SectionName = FName("DeathHead");
+			break;	
+		}
+		AnimInstance->Montage_JumpToSection(SectionName);
+	}
+}
+
+void ABlasterCharacter::Elim_Implementation()
+{
+	bWasKilled = true;
+	PlayDeathMontage();
 }
 
 void ABlasterCharacter::PlayHitReactMontage()

@@ -36,6 +36,9 @@ public:
 	 * Public Methods
 	 */
 	void PlayFireMontage(bool bAiming);
+	void PlayDeathMontage();
+
+	UFUNCTION(NetMulticast, Reliable)
 	void Elim();
 
 protected:
@@ -122,6 +125,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* HitReactMontage;
 
+	UPROPERTY(EditAnywhere, Category = Combat)
+	UAnimMontage* DeathMontage;
+
 	UPROPERTY(EditAnywhere)
 	float CameraThreshold{DEFAULT_CAMERA_THRESHOLD};
 
@@ -162,6 +168,8 @@ private:
 	void OnRep_Health();
 
 	class ABlasterPlayerController* BlasterPlayerController;
+
+	bool bWasKilled = false;
 	
 public:
 	/*
@@ -174,6 +182,7 @@ public:
 	FORCEINLINE ETurningInPlace GetTurningInPlace() const { return TurningInPlace; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE bool ShouldRotateRootBone() { return bRotateRootBone; }
+	FORCEINLINE bool WasKilled() const { return bWasKilled; }
 	bool IsWeaponEquipped();
 	bool IsAiming();
 

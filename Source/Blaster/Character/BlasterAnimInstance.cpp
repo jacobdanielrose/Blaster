@@ -80,6 +80,7 @@ void UBlasterAnimInstance::SetCharacterProperties()
 	bAiming = BlasterCharacter->IsAiming();
 	TurningInPlace = BlasterCharacter->GetTurningInPlace();
 	bRotateRootBone = BlasterCharacter->ShouldRotateRootBone();
+	bWasKilled = BlasterCharacter->WasKilled();
 }
 
 float UBlasterAnimInstance::CalculateSpeed()

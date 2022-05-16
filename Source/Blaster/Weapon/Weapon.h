@@ -22,16 +22,24 @@ class BLASTER_API AWeapon : public AActor
 	GENERATED_BODY()
 	
 public:	
+
+	/*
+	 * UClass Defaults
+	 */
 	AWeapon();
+
+	/*
+	 * Public Overrides
+	 */
 	virtual void Tick(float DeltaTime) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	void ShowPickupWidget(bool bShowWidget);
 	virtual void Fire(const FVector& HitTarget);
 
-	/**
-	*  Textures for the weapon crosshairs
-	**/
+	void ShowPickupWidget(bool bShowWidget);
 
+	/*
+	 * Textures for the weapon crosshairs
+	 */
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
 	class UTexture2D* CrosshairsCenter;
 
@@ -50,13 +58,11 @@ public:
 	/*
 	 * Zoomed FOV while aiming
 	 */
-
 	UPROPERTY(EditAnywhere)
 	float ZoomedFOV = 30.f;
 
 	UPROPERTY(EditAnywhere)
 	float ZoomInterpSpeed = 20.f;
-
 
 	/*
 	 * Automatic fire
@@ -89,6 +95,15 @@ protected:
 	);
 	
 private:
+	/*
+	 * Private Weapon Properties
+	 */
+	UFUNCTION()
+	void OnRep_WeaponState();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ACasing> CasingClass;
+
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
 	USkeletalMeshComponent* WeaponMesh;
 
@@ -98,23 +113,24 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_WeaponState, VisibleAnywhere, Category = "Weapon Properties")
 	EWeaponState WeaponState;
 
-	UFUNCTION()
-	void OnRep_WeaponState();
-
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
 	class UWidgetComponent* PickupWidget;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	class UAnimationAsset* FireAnimation;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ACasing> CasingClass;
-
 public:
-	void SetWeaponState(EWeaponState State);
+	/*
+	 * Getters
+	 */
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
 	FORCEINLINE USkeletalMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
 	FORCEINLINE float GetZoomedFOV() const { return ZoomedFOV; }
 	FORCEINLINE float GetZoomInterpSpeed() const { return ZoomInterpSpeed; }
 	
+	/*
+	 * Setters
+	 */
+	void SetWeaponState(EWeaponState State);
+
 };

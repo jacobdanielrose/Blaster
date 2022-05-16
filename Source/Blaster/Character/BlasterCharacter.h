@@ -11,6 +11,7 @@
 #define DEFAULT_TURN_THRESHOLD 0.5f
 #define DEFAULT_CAMERA_THRESHOLD 200.f
 #define DEFAULT_MAX_PLAYER_HEALTH 100.f
+#define DEFAULT_DEATH_TIMER_DELAY 2.f
 
 UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter, public IInteractWithCrosshairsInterface
@@ -37,9 +38,10 @@ public:
 	 */
 	void PlayFireMontage(bool bAiming);
 	void PlayDeathMontage();
-
-	UFUNCTION(NetMulticast, Reliable)
 	void Elim();
+	
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastElim();
 
 protected:
 	virtual void BeginPlay() override;
@@ -170,6 +172,13 @@ private:
 	class ABlasterPlayerController* BlasterPlayerController;
 
 	bool bWasKilled = false;
+
+	FTimerHandle ElimTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ElimDelay = DEFAULT_DEATH_TIMER_DELAY;
+	
+	void ElimTimerFinished();
 	
 public:
 	/*

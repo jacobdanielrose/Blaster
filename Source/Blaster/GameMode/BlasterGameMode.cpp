@@ -4,14 +4,23 @@
 #include "BlasterGameMode.h"
 #include "Blaster/Character/BlasterCharacter.h"
 #include "Blaster/PlayerController/BlasterPlayerController.h"
+#include "Blaster/PlayerState/BlasterPlayerState.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 
+#define DEFAULT_SCORE_INCREMENT 1.f
+
 void ABlasterGameMode::PlayerEliminated(class ABlasterCharacter* ElimmedCharacter, class ABlasterPlayerController* VictimController, ABlasterPlayerController* AttackerController)
 {
+	ABlasterPlayerState* AttackerPlayerState = AttackerController ? Cast<ABlasterPlayerState>(AttackerController->PlayerState) : nullptr;
+	ABlasterPlayerState* VictomPlayerState = VictimController ? Cast<ABlasterPlayerState>(VictimController->PlayerState) : nullptr;
+	if (AttackerPlayerState && AttackerPlayerState != VictomPlayerState)
+	{
+		AttackerPlayerState->AddToScore(DEFAULT_SCORE_INCREMENT);
+	}
 	if (ElimmedCharacter)
 	{
-		ElimmedCharacter->Elim();	
+		ElimmedCharacter->Elim();
 	}
 }
 

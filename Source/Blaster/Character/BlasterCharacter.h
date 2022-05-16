@@ -79,6 +79,8 @@ protected:
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 	void UpdateHUDHealth();
+	// Poll for any relevant classes and initialize HUD
+	void PollInit();
 
 private:
 	/*
@@ -179,6 +181,8 @@ private:
 	float ElimDelay = DEFAULT_DEATH_TIMER_DELAY;
 	
 	void ElimTimerFinished();
+
+	class ABlasterPlayerState* BlasterPlayerState;
 	
 public:
 	/*

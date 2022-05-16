@@ -36,6 +36,7 @@ public:
 	virtual void Fire(const FVector& HitTarget);
 
 	void ShowPickupWidget(bool bShowWidget);
+	void Dropped();
 
 	/*
 	 * Textures for the weapon crosshairs

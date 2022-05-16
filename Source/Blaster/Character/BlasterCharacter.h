@@ -171,6 +171,7 @@ private:
 	UFUNCTION()
 	void OnRep_Health();
 
+	UPROPERTY()
 	class ABlasterPlayerController* BlasterPlayerController;
 
 	bool bWasKilled = false;
@@ -182,6 +183,7 @@ private:
 	
 	void ElimTimerFinished();
 
+	UPROPERTY()
 	class ABlasterPlayerState* BlasterPlayerState;
 	
 public:

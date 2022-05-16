@@ -36,6 +36,7 @@ public:
 	 * Public Methods
 	 */
 	void PlayFireMontage(bool bAiming);
+	void Elim();
 
 protected:
 	virtual void BeginPlay() override;

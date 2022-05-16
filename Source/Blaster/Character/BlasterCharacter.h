@@ -8,70 +8,108 @@
 #include "GameFramework/Character.h"
 #include "BlasterCharacter.generated.h"
 
+#define DEFAULT_TURN_THRESHOLD 0.5f
+#define DEFAULT_CAMERA_THRESHOLD 200.f
+
 UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter, public IInteractWithCrosshairsInterface
 {
 	GENERATED_BODY()
 
 public:
+	/*
+	 * Class Defaults
+	 */
 	ABlasterCharacter();
 	virtual void Tick(float DeltaTime) override;
+	
+	/*
+	 * Public Overrides
+	 */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
+	virtual void OnRep_ReplicatedMovement() override;
+
+	/*
+	 * Public Methods
+	 */
 	void PlayFireMontage(bool bAiming);
 
+	/*
+	 * Replicated Public Methods
+	 */
 	UFUNCTION(NetMulticast, Unreliable)
 	void MulticastHit();
-
-	virtual void OnRep_ReplicatedMovement() override;
 
 protected:
 	virtual void BeginPlay() override;
 
+	/*
+	 * Movement Input Methods
+	 */
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void Turn(float Value);
 	void LookUp(float Value);
+	virtual void Jump() override;
+
+	/*
+	 * Action Input Methods
+	 */
 	void EquipButtonPressed();
 	void CrouchButtonPressed();
 	void AimButtonPressed();
 	void AimButtonReleased();
+	void FireButtonPressed();
+	void FireButtonReleased();
+
+	/*
+	 * Protected Generic Methods
+	 */
 	void CalculateAO_Pitch();
 	void AimOffset(float DeltaTime);
 	void SimProxiesTurn();
-	virtual void Jump() override;
-	void FireButtonPressed();
-	void FireButtonReleased();
 	void PlayHitReactMontage();
 
 private:
+	/*
+	 * Camera Properties
+	 */
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class UCameraComponent* FollowCamera;
 
+	// Overhead Properties
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	class UWidgetComponent* OverheadWidget;
 
+	/*
+	 * Weapon Properties
+	 */
 	UPROPERTY(ReplicatedUsing = OnRep_OverlappingWeapon)
 	class AWeapon* OverlappingWeapon;
 
 	UFUNCTION()
 	void OnRep_OverlappingWeapon(AWeapon* LastWeapon);
 
+	/*
+	 * Combat Properties
+	 */
 	UPROPERTY(VisibleAnywhere)
 	class UCombatComponent* Combat;
 
+	/*
+	 * Camera Properties
+	 */
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
 
-	float AO_Yaw;
-	float InterpAO_Yaw;
-	float AO_Pitch;
-	FRotator StartingAimRotation;
-
+	/*
+	* Animation Properties
+	*/
 	ETurningInPlace TurningInPlace;
 	void TurnInPlace(float DeltaTime);
 
@@ -80,29 +118,52 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* HitReactMontage;
-	
-	void HideCameraIfCharacterClose();
 
 	UPROPERTY(EditAnywhere)
-	float CameraThreshold{200.f};
+	float CameraThreshold{DEFAULT_CAMERA_THRESHOLD};
 
-	bool bRotateRootBone;
-	float TurnThreshold{0.5f};
+	/*
+	* Private Methods
+	*/
+	float CalculateSpeed();
+	void HideCameraIfCharacterClose();
+
+	/*
+	* Private Variables
+	*/ 
+
+	// Aim Variables
+	float AO_Yaw;
+	float InterpAO_Yaw;
+	float AO_Pitch;
+	FRotator StartingAimRotation;
+
+	// Hit Animation Variables
 	FRotator ProxyRotationLastFrame;
 	FRotator ProxyRotation;
+	float TurnThreshold{DEFAULT_TURN_THRESHOLD};
 	float ProxyYaw;
 	float TimeSinceLastMovementReplication;
-	float CalculateSpeed();
+	bool bRotateRootBone;
+
 	
 public:
-	void SetOverlappingWeapon(AWeapon* Weapon);
-	bool IsWeaponEquipped();
-	bool IsAiming();
+	/*
+	 * Getters
+	 */
+	AWeapon* GetEquippedWeapon();
+	FVector GetHitTarget() const;
 	FORCEINLINE float GetAO_Yaw() const { return AO_Yaw; }
 	FORCEINLINE float GetAO_Pitch() const { return AO_Pitch; }
-	AWeapon* GetEquippedWeapon();
 	FORCEINLINE ETurningInPlace GetTurningInPlace() const { return TurningInPlace; }
-	FVector GetHitTarget() const;
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE bool ShouldRotateRootBone() { return bRotateRootBone; }
+	bool IsWeaponEquipped();
+	bool IsAiming();
+
+	/*
+	* Setters
+	*/
+	void SetOverlappingWeapon(AWeapon* Weapon);
+
 };

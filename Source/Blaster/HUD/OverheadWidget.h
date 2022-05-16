@@ -15,13 +15,19 @@ class BLASTER_API UOverheadWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	/*
+	 * Public Properties
+	 */
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* DisplayText;
 
-	void SetDisplayText(FString TextToDisplay);
-
 	UFUNCTION(BlueprintCallable)
 	void ShowPlayerNetRole(APawn* InPawn);
+
+	/*
+	 * Public Methods
+	 */
+	void SetDisplayText(FString TextToDisplay);
 
 protected:
 	virtual void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;

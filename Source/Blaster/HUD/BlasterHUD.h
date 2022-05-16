@@ -11,6 +11,9 @@ struct FHUDPackage
 {
 	GENERATED_BODY()
 public:
+	/**
+ 	* Crosshair Variables 
+ 	*/
 	class UTexture2D* CrosshairsCenter;
 	UTexture2D* CrosshairsLeft;
 	UTexture2D* CrosshairsRight;
@@ -29,6 +32,9 @@ class BLASTER_API ABlasterHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	/**	
+	* Public Overrides
+	*/
 	virtual void DrawHUD() override;
 
 private:
@@ -36,9 +42,15 @@ private:
 
 	void DrawCrosshair(UTexture2D* Texture, FVector2D ViewportCenter, FVector2D Spread, FLinearColor CrosshairColor);
 
+	/**
+ 	* Private Properties
+ 	*/
 	UPROPERTY(EditAnywhere)
 	float CrosshairSpreadMax = 16.f;
 	
 public:
+	/**
+ 	* Setters
+ 	*/
 	FORCEINLINE void SetHUDPackage(const FHUDPackage& Package) {HUDPackage = Package; }
 };

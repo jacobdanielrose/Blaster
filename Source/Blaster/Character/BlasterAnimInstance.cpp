@@ -24,18 +24,9 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	}
 	if (BlasterCharacter == nullptr) return;
 
-	FVector Velocity = BlasterCharacter->GetVelocity();
-	Velocity.Z = 0.f;
-	Speed = Velocity.Size();
+	float Speed = CalculateSpeed();
 
-	bIsInAir = BlasterCharacter->GetCharacterMovement()->IsFalling();
-	bIsAccelerating = BlasterCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f ? true : false;
-	bWeaponEquipped = BlasterCharacter->IsWeaponEquipped();
-	EquippedWeapon = BlasterCharacter->GetEquippedWeapon();
-	bIsCrouched = BlasterCharacter->bIsCrouched;
-	bAiming = BlasterCharacter->IsAiming();
-	TurningInPlace = BlasterCharacter->GetTurningInPlace();
-	bRotateRootBone = BlasterCharacter->ShouldRotateRootBone();
+	SetCharacterProperties();
 
 	// Offset Yaw for Strafing
 	FRotator AimRotation = BlasterCharacter->GetBaseAimRotation();
@@ -77,4 +68,23 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 		DrawDebugLine(GetWorld(), MuzzleTipTransform.GetLocation(), BlasterCharacter->GetHitTarget(), FColor::Orange);*/
 		
 	}
+}
+
+void UBlasterAnimInstance::SetCharacterProperties()
+{
+	bIsInAir = BlasterCharacter->GetCharacterMovement()->IsFalling();
+	bIsAccelerating = BlasterCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f ? true : false;
+	bWeaponEquipped = BlasterCharacter->IsWeaponEquipped();
+	EquippedWeapon = BlasterCharacter->GetEquippedWeapon();
+	bIsCrouched = BlasterCharacter->bIsCrouched;
+	bAiming = BlasterCharacter->IsAiming();
+	TurningInPlace = BlasterCharacter->GetTurningInPlace();
+	bRotateRootBone = BlasterCharacter->ShouldRotateRootBone();
+}
+
+float UBlasterAnimInstance::CalculateSpeed()
+{
+	FVector Velocity = GetVelocity();
+	Velocity.Z = 0.f;
+	return Velocity.Size();
 }

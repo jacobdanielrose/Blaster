@@ -24,7 +24,7 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	}
 	if (BlasterCharacter == nullptr) return;
 
-	float Speed = CalculateSpeed();
+	Speed = CalculateSpeed();
 
 	SetCharacterProperties();
 
@@ -84,7 +84,7 @@ void UBlasterAnimInstance::SetCharacterProperties()
 
 float UBlasterAnimInstance::CalculateSpeed()
 {
-	FVector Velocity = GetVelocity();
+	FVector Velocity = BlasterCharacter->GetVelocity();
 	Velocity.Z = 0.f;
 	return Velocity.Size();
 }

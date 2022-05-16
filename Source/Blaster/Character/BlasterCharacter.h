@@ -10,6 +10,7 @@
 
 #define DEFAULT_TURN_THRESHOLD 0.5f
 #define DEFAULT_CAMERA_THRESHOLD 200.f
+#define DEFAULT_MAX_PLAYER_HEALTH 100.f
 
 UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter, public IInteractWithCrosshairsInterface
@@ -145,6 +146,18 @@ private:
 	float ProxyYaw;
 	float TimeSinceLastMovementReplication;
 	bool bRotateRootBone;
+
+	/*
+	 * Player Health
+	 */
+	UPROPERTY(EditAnywhere, Category = "Player Stats")
+	float MaxHealth = DEFAULT_MAX_PLAYER_HEALTH;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Health, VisibleAnywhere, Category = "Player Stats")
+	float Health = DEFAULT_MAX_PLAYER_HEALTH;
+	
+	UFUNCTION()
+	void OnRep_Health();
 
 	
 public:

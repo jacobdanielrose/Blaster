@@ -76,15 +76,12 @@ void ABlasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BlasterPlayerController = Cast<ABlasterPlayerController>(Controller);
-	if (BlasterPlayerController)
+	UpdateHUDHealth();
+	if (HasAuthority())
 	{
-		if (HasAuthority())
-		{
-			BlasterPlayerController->SetHUDHealth(Health, MaxHealth);
-			OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
-		}
+		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
+	
 	
 }
 

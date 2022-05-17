@@ -60,6 +60,8 @@ protected:
 	void ServerReload();
 	
 	void HandleReload();
+	int32 AmountToReload();
+
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAiming(bool bIsAiming);
@@ -154,4 +156,7 @@ private:
 
 	UFUNCTION()
 	void OnRep_CombatState();
+
+	void UpdateAmmoValues();
+
 };

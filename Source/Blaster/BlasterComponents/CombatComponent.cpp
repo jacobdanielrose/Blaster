@@ -209,7 +209,7 @@ void UCombatComponent::OnRep_EquippedWeapon()
 
 void UCombatComponent::Fire()
 {
-	if (bCanFire)
+	if (bCanFire())
 	{
 		bCanFire = false;
 		ServerFire(HitTarget);
@@ -314,7 +314,11 @@ void UCombatComponent::EquipWeapon( AWeapon* WeaponToEquip)
 	EquippedWeapon->SetHUDAmmo();
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
 	Character->bUseControllerRotationYaw = true;
+}
 
-	
+bool UCombatComponent::CanFire()
+{
+	if (EquippedWeapon == nullptr) return false;
+	return !EquippedWeapon->IsEmpty() || !bCanFire;
 }
 

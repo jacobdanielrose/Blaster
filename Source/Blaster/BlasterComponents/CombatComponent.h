@@ -36,7 +36,9 @@ public:
  	* Public Methods 
  	*/
 	void EquipWeapon( AWeapon* WeaponToEquip );
-	
+
+	void Reload();
+
 protected:
 	/**
  	* Protected Methods 
@@ -51,6 +53,9 @@ protected:
 	/**
  	* Replicated Protected Methods 
  	*/
+	UFUNCTION(Server, Reliable)
+	void ServerReload();
+
 	UFUNCTION(Server, Reliable)
 	void ServerSetAiming(bool bIsAiming);
 
@@ -133,4 +138,9 @@ private:
 	void OnRep_CarriedAmmo();
 
 	TMap<EWeaponType, int32> CarriedAmmoMap;
+
+	UPROPERTY(EditAnywhere)
+	int32 StartingARAmmo = 30;
+
+	void InitializeCarriedAmmo();
 };

@@ -38,6 +38,7 @@ public:
 	 */
 	void PlayFireMontage(bool bAiming);
 	void PlayDeathMontage();
+	void PlayReloadMontage();
 	void Elim();
 	
 	UFUNCTION(NetMulticast, Reliable)
@@ -60,6 +61,7 @@ protected:
 	 */
 	void EquipButtonPressed();
 	void CrouchButtonPressed();
+	void ReloadButtonPressed();
 	void AimButtonPressed();
 	void AimButtonReleased();
 	void FireButtonPressed();
@@ -131,6 +133,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* DeathMontage;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	UAnimMontage* ReloadMontage;
 
 	UPROPERTY(EditAnywhere)
 	float CameraThreshold{DEFAULT_CAMERA_THRESHOLD};

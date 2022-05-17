@@ -7,6 +7,7 @@
 #include "Blaster/Interfaces/InteractWithCrosshairsInterface.h"
 #include "GameFramework/Character.h"
 #include "BlasterCharacter.generated.h"
+#include "Blaster/BlasterTypes/CombatState.h"
 
 #define DEFAULT_TURN_THRESHOLD 0.5f
 #define DEFAULT_CAMERA_THRESHOLD 200.f
@@ -110,7 +111,7 @@ private:
 	/*
 	 * Combat Properties
 	 */
-	UPROPERTY(VisibleAnywhere)
+ 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCombatComponent* Combat;
 
 	/*
@@ -205,6 +206,7 @@ public:
 	FORCEINLINE bool WasKilled() const { return bWasKilled; }
 	FORCEINLINE float GetHealth() const { return Health; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
+	ECombatState GetCombatState() const;
 	bool IsWeaponEquipped();
 	bool IsAiming();
 

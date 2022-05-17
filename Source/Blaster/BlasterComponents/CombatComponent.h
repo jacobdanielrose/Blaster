@@ -6,6 +6,7 @@
 #include "Blaster/HUD/BlasterHUD.h"
 #include "Blaster/Weapon/WeaponTypes.h"
 #include "Blaster/Weapon/Weapon.h"
+#include "Blaster/BlasterTypes/CombatState.h"
 #include "Components/ActorComponent.h"
 #include "CombatComponent.generated.h"
 
@@ -36,8 +37,10 @@ public:
  	* Public Methods 
  	*/
 	void EquipWeapon( AWeapon* WeaponToEquip );
-
 	void Reload();
+
+	UFUNCTION(BlueprintCallable)
+	void FinishReloading();
 
 protected:
 	/**
@@ -55,6 +58,8 @@ protected:
  	*/
 	UFUNCTION(Server, Reliable)
 	void ServerReload();
+	
+	void HandleReload();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAiming(bool bIsAiming);
@@ -143,4 +148,10 @@ private:
 	int32 StartingARAmmo = 30;
 
 	void InitializeCarriedAmmo();
+
+	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
+	ECombatState CombatState = ECombatState::ECS_Unoccupied;
+
+	UFUNCTION()
+	void OnRep_CombatState();
 };

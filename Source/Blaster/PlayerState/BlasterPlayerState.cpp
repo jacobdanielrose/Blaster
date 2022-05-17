@@ -52,6 +52,7 @@ void ABlasterPlayerState::AddToDefeats(int32 DefeatsAmount)
 		Controller = Controller == nullptr ? Cast<ABlasterPlayerController>(Character->Controller) : Controller;
 		if (Controller)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("The Kills: %d"), Defeats);
 			Controller->SetHUDDefeats(Defeats);
 		}
 	}

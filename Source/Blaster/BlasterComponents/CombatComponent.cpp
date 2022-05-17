@@ -228,7 +228,7 @@ void UCombatComponent::OnRep_EquippedWeapon()
 
 void UCombatComponent::Fire()
 {
-	if (bCanFire())
+	if (CanFire())
 	{
 		bCanFire = false;
 		ServerFire(HitTarget);

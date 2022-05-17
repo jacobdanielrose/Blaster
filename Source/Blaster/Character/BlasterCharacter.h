@@ -6,8 +6,8 @@
 #include "Blaster/BlasterTypes/TurningInPlace.h"
 #include "Blaster/Interfaces/InteractWithCrosshairsInterface.h"
 #include "GameFramework/Character.h"
-#include "BlasterCharacter.generated.h"
 #include "Blaster/BlasterTypes/CombatState.h"
+#include "BlasterCharacter.generated.h"
 
 #define DEFAULT_TURN_THRESHOLD 0.5f
 #define DEFAULT_CAMERA_THRESHOLD 200.f

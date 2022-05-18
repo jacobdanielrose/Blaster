@@ -42,6 +42,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FinishReloading();
 
+	void FireButtonPressed(bool bPressed);
+
+
 protected:
 	/**
  	* Protected Methods 
@@ -49,7 +52,6 @@ protected:
 	virtual void BeginPlay() override;
 	void SetAiming(bool bIsAiming);
 	void Fire();
-	void FireButtonPressed(bool bPressed);
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
 	void SetHUDCrosshairs(float DeltaTime);
 

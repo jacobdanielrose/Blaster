@@ -44,6 +44,8 @@ public:
 	
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastElim();
+	virtual void Destroyed() override;
+
 
 	UPROPERTY(Replicated)
 	bool bDisableGameplay = false;

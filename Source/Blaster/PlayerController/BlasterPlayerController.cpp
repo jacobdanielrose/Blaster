@@ -7,6 +7,8 @@
 #include "Blaster/HUD/CharacterOverlay.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
+#include "Net/UnrealNetwork.h"
+
 
 void ABlasterPlayerController::BeginPlay()
 {

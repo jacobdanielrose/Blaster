@@ -40,9 +40,17 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float Damage = DEFAULT_WEAPON_DAMAGE;
 	
-private:
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* ImpactParticles;
+
+	// soundbase vs soundcue?
+	UPROPERTY(EditAnywhere)
+	class USoundBase* ImpactSound;
+
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* CollisionBox;
+
+private:
 
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
@@ -51,16 +59,10 @@ private:
 	 * Hit FX Variables
 	 */
 	UPROPERTY(EditAnywhere)
-	class UParticleSystem* Tracer;
+	UParticleSystem* Tracer;
+
 
 	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
-
-	UPROPERTY(EditAnywhere)
-	UParticleSystem* ImpactParticles;
-
-	// soundbase vs soundcue?
-	UPROPERTY(EditAnywhere)
-	class USoundBase* ImpactSound;
 
 };
